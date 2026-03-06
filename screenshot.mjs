@@ -1,4 +1,4 @@
-import puppeteer from "puppeteer";
+import puppeteer, { KnownDevices } from "puppeteer";
 import { existsSync, mkdirSync, readdirSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
@@ -19,9 +19,15 @@ const n = existing.length ? Math.max(...existing) + 1 : 1;
 const filename = `screenshot-${n}${label}.png`;
 const outPath = join(dir, filename);
 
+const isMobile = label.includes("mobile");
+
 const browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox"] });
 const page = await browser.newPage();
-await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
+if (isMobile) {
+  await page.emulate(KnownDevices["iPhone 14 Pro"]);
+} else {
+  await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
+}
 await page.goto(url, { waitUntil: "networkidle0" });
 // Force all fade-up elements visible for full-page review
 await page.addStyleTag({ content: ".fu { opacity: 1 !important; transform: none !important; transition: none !important; }" });
