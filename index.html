@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Proficio Accountants | Accounting for Your Success | Essex</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Varela+Round&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== RESET ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ===== BRAND TOKENS ===== */
+    :root {
+      --navy:         #253B7C;
+      --magenta:      #C5197D;
+      --magenta-dark: #a3146a;
+      --dark-pink:    #D43792;
+      --lighter-pink: #FBD4E2;
+      --teal:         #3FC0C3;
+      --teal-dark:    #2fa0a3;
+      --light-blue:   #B2E0E4;
+      --black:        #000000;
+      --white:        #FFFFFF;
+      --off-white:    #f7f8fc;
+    }
+
+    /* ===== BASE ===== */
+    html {
+      font-family: 'Varela Round', 'Arial Rounded MT', sans-serif;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      scroll-behavior: smooth;
+      scrollbar-width: thin;
+    }
+    body { background: var(--white); color: var(--black); overflow-x: hidden; }
+    img  { display: block; max-width: 100%; }
+    a    { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+    h1, h2, h3, h4 {
+      font-family: 'Nunito', 'Arial Rounded MT Bold', sans-serif;
+      font-weight: 900;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+    }
+
+    /* ===== BUTTONS ===== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      letter-spacing: 0.01em;
+      padding: 0.875rem 2rem;
+      border-radius: 999px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .btn:active { transform: translateY(1px) !important; }
+
+    .btn-magenta { background: var(--magenta); color: var(--white); border-color: var(--magenta); }
+    .btn-magenta:hover {
+      background: var(--magenta-dark); border-color: var(--magenta-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(197,25,125,0.35);
+    }
+
+    .btn-outline-teal { background: transparent; color: var(--teal); border-color: var(--teal); }
+    .btn-outline-teal:hover { background: var(--teal); color: var(--white); transform: translateY(-2px); }
+
+    .btn-white { background: var(--white); color: var(--magenta); border-color: var(--white); }
+    .btn-white:hover {
+      background: transparent; color: var(--white); border-color: var(--white);
+      transform: translateY(-2px);
+    }
+
+    /* ===== NAV ===== */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 1.5rem;
+      background: rgba(37,59,124,0.97);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    @media (min-width: 768px) { .nav { padding: 1rem 3rem; } }
+
+    .nav-brand {
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .nav-mark {
+      width: 40px; height: 40px; border-radius: 50%; overflow: hidden;
+      border: 2px solid rgba(255,255,255,0.25); flex-shrink: 0;
+    }
+    .nav-mark img { width: 100%; height: 100%; object-fit: cover; }
+    .nav-name {
+      font-family: 'Nunito', sans-serif; font-weight: 900;
+      font-size: 1.05rem; color: var(--white); line-height: 1.2;
+    }
+    .nav-name span {
+      display: block; font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal);
+    }
+
+    .nav-links {
+      display: none; list-style: none; gap: 2.25rem; align-items: center;
+    }
+    @media (min-width: 800px) { .nav-links { display: flex; } }
+    .nav-links a {
+      font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.875rem;
+      letter-spacing: 0.07em; text-transform: uppercase;
+      color: rgba(255,255,255,0.75); transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--teal); }
+
+    .nav-cta { display: none; }
+    @media (min-width: 960px) { .nav-cta { display: inline-flex; font-size: 0.875rem; padding: 0.65rem 1.5rem; } }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative; min-height: 100vh;
+      background:
+        radial-gradient(ellipse 70% 60% at 85% 40%, rgba(197,25,125,0.18) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 50% at 15% 75%, rgba(63,192,195,0.12) 0%, transparent 60%),
+        var(--navy);
+      display: flex; align-items: center; overflow: hidden;
+      padding-top: 72px;
+    }
+
+    .hero-numbers {
+      position: absolute; inset: 0; pointer-events: none; z-index: 0;
+    }
+
+    /* Stats separates from hero via padding only — same bg colour */
+
+    .hero-inner {
+      position: relative; z-index: 2;
+      width: 100%; max-width: 1200px; margin: 0 auto;
+      padding: 3rem 1.5rem 5rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    @media (min-width: 900px) {
+      .hero-inner {
+        grid-template-columns: 1fr 340px;
+        gap: 5rem; padding: 5rem 3rem 6rem;
+      }
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: rgba(63,192,195,0.12); border: 1px solid rgba(63,192,195,0.35);
+      border-radius: 999px; padding: 0.4rem 1.1rem 0.4rem 0.8rem;
+      font-family: 'Nunito', sans-serif; font-weight: 700;
+      font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--teal); margin-bottom: 1.75rem;
+    }
+    .hero-badge-dot {
+      width: 7px; height: 7px; border-radius: 50%; background: var(--teal);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.75); }
+    }
+
+    .hero-h1 {
+      font-size: clamp(3rem, 6.5vw, 6.5rem);
+      color: var(--white); margin-bottom: 1.75rem;
+      letter-spacing: -0.04em;
+    }
+    .hero-h1 em { font-style: normal; color: var(--magenta); }
+    .hero-h1 .tc { color: var(--teal); }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      line-height: 1.75; color: rgba(255,255,255,0.7);
+      max-width: 48ch; margin-bottom: 2.5rem;
+    }
+
+    .hero-ctas { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
+
+    /* Hero logomark */
+    .hero-mark { display: flex; justify-content: center; order: -1; }
+    @media (min-width: 900px) { .hero-mark { order: 0; } }
+
+    .hero-mark-wrap {
+      position: relative;
+      width: min(260px, 55vw);
+      height: min(260px, 55vw);
+    }
+    @media (min-width: 900px) { .hero-mark-wrap { width: 320px; height: 320px; } }
+
+    /* Decorative orbital rings */
+    .hero-mark-wrap::before,
+    .hero-mark-wrap::after {
+      content: ''; position: absolute; border-radius: 50%; border: 1.5px solid;
+    }
+    .hero-mark-wrap::before { inset: -18px; border-color: rgba(63,192,195,0.22); }
+    .hero-mark-wrap::after  { inset: -36px; border-color: rgba(63,192,195,0.09); }
+
+    /* Spinning dot on outer ring */
+    .hero-mark-orbit {
+      position: absolute; inset: -36px; border-radius: 50%;
+      animation: orbit 8s linear infinite;
+    }
+    @keyframes orbit { to { transform: rotate(360deg); } }
+    .hero-mark-orbit::before {
+      content: '';
+      position: absolute; top: 50%; left: -5px;
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--teal);
+      box-shadow: 0 0 12px rgba(63,192,195,0.8);
+      transform: translateY(-50%);
+    }
+
+    .hero-mark-img {
+      width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
+      border: 4px solid rgba(255,255,255,0.18);
+      box-shadow: 0 20px 80px rgba(0,0,0,0.5), 0 0 0 8px rgba(197,25,125,0.12);
+    }
+
+    /* ===== STATS BAR ===== */
+    .stats {
+      background: var(--navy);
+      padding: 3rem 1.5rem 4rem;
+    }
+    @media (min-width: 768px) { .stats { padding: 3rem 3rem 4.5rem; } }
+
+    .stats-inner {
+      max-width: 900px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr;
+      gap: 2.5rem; text-align: center;
+    }
+    @media (min-width: 600px) {
+      .stats-inner { grid-template-columns: repeat(3, 1fr); gap: 0; }
+    }
+
+    .stat { position: relative; padding: 0 2rem; }
+    .stat + .stat::before {
+      content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+      height: 45%; width: 1px; background: rgba(63,192,195,0.2);
+      display: none;
+    }
+    @media (min-width: 600px) { .stat + .stat::before { display: block; } }
+
+    .stat-n {
+      font-family: 'Nunito', sans-serif; font-weight: 900;
+      font-size: 3rem; color: var(--teal); line-height: 1; margin-bottom: 0.4rem;
+      letter-spacing: -0.03em;
+    }
+    .stat-l {
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: rgba(255,255,255,0.45);
+    }
+
+    /* ===== SHARED SECTION ===== */
+    .section { padding: 6rem 1.5rem; }
+    @media (min-width: 768px) { .section { padding: 9rem 3rem; } }
+    .section-wrap { max-width: 1200px; margin: 0 auto; }
+
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-family: 'Nunito', sans-serif; font-weight: 800;
+      font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--magenta); margin-bottom: 0.85rem;
+    }
+    .eyebrow::before { content: ''; display: block; width: 1.75rem; height: 2px; background: var(--magenta); }
+
+    .section-h { font-size: clamp(2rem, 4vw, 3.25rem); margin-bottom: 1rem; }
+    .section-p { font-size: 1.05rem; line-height: 1.75; color: #4a4a4a; max-width: 52ch; }
+
+    /* ===== SERVICES ===== */
+    .services { background: var(--white); }
+
+    .services-head { margin-bottom: 4rem; }
+
+    .services-grid {
+      display: grid; gap: 1.5rem;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 600px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 960px) { .services-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .svc-card {
+      background: var(--white); border-radius: 0.875rem; padding: 2.25rem;
+      border: 1px solid #eaecf4;
+      box-shadow: 0 1px 3px rgba(37,59,124,0.04), 0 4px 16px rgba(37,59,124,0.06);
+      transition: box-shadow 0.3s, transform 0.3s, border-color 0.3s;
+    }
+    .svc-card:hover {
+      box-shadow: 0 4px 8px rgba(197,25,125,0.06), 0 16px 48px rgba(197,25,125,0.12);
+      transform: translateY(-6px);
+      border-color: rgba(197,25,125,0.2);
+    }
+    .svc-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      background: rgba(63,192,195,0.08);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+    .svc-icon svg { width: 24px; height: 24px; stroke: var(--teal); stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .svc-name { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1.1rem; color: var(--navy); margin-bottom: 0.6rem; letter-spacing: -0.01em; }
+    .svc-desc { font-size: 0.88rem; line-height: 1.72; color: #666; }
+
+    /* ===== WHY PROFICIO ===== */
+    .why { background: var(--navy); }
+    .why .eyebrow { color: var(--teal); }
+    .why .eyebrow::before { background: var(--teal); }
+    .why .section-h { color: var(--white); }
+    .why .section-p { color: rgba(255,255,255,0.6); }
+
+    .why-grid {
+      display: grid; gap: 1.5rem; margin-top: 3.5rem;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 768px) { .why-grid { grid-template-columns: repeat(3, 1fr); gap: 2rem; } }
+
+    .why-card {
+      background: rgba(255,255,255,0.03); border-radius: 0.875rem; padding: 2.5rem 2.25rem;
+      border: 1px solid rgba(255,255,255,0.07);
+      transition: background 0.3s, border-color 0.3s, transform 0.3s;
+    }
+    .why-card:hover {
+      background: rgba(255,255,255,0.07);
+      border-color: rgba(63,192,195,0.3);
+      transform: translateY(-5px);
+    }
+    .why-icon {
+      width: 52px; height: 52px; border-radius: 12px;
+      background: rgba(197,25,125,0.15);
+      border: 1px solid rgba(197,25,125,0.2);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.75rem;
+    }
+    .why-icon svg { width: 26px; height: 26px; stroke: var(--magenta); stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .why-title { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1.35rem; color: var(--white); margin-bottom: 0.75rem; }
+    .why-desc { font-size: 0.93rem; line-height: 1.75; color: rgba(255,255,255,0.6); }
+
+    /* ===== TESTIMONIALS ===== */
+    .testimonials { background: var(--off-white); }
+
+    .t-grid {
+      display: grid; gap: 1.5rem; margin-top: 3.5rem;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 768px) { .t-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    .t-card {
+      border-radius: 0.875rem; padding: 2.5rem;
+      background: var(--white);
+      border: 1px solid #eaecf4;
+      box-shadow: 0 1px 3px rgba(37,59,124,0.04), 0 8px 32px rgba(37,59,124,0.07);
+      position: relative; overflow: hidden;
+    }
+    .t-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--magenta), var(--dark-pink));
+    }
+    .t-stars { display: flex; gap: 3px; margin-bottom: 1.25rem; }
+    .t-star { width: 15px; height: 15px; fill: #f59e0b; }
+    .t-quote { font-size: 4rem; line-height: 0.75; font-family: 'Nunito', sans-serif; font-weight: 900; color: rgba(197,25,125,0.15); margin-bottom: 0.25rem; }
+    .t-text { font-size: 1rem; line-height: 1.78; color: #333; margin-bottom: 2rem; font-style: italic; }
+    .t-author { display: flex; align-items: center; gap: 0.85rem; }
+    .t-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--navy); display: flex; align-items: center; justify-content: center;
+      font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 0.9rem;
+      color: var(--white); flex-shrink: 0;
+    }
+    .t-name { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.93rem; color: var(--navy); }
+    .t-biz  { font-size: 0.8rem; color: #666; margin-top: 0.15rem; }
+
+    /* ===== CTA ===== */
+    .cta-sec {
+      background:
+        radial-gradient(ellipse 80% 80% at 50% 120%, rgba(197,25,125,0.45) 0%, transparent 65%),
+        var(--navy);
+      text-align: center;
+    }
+    .cta-sec .section-wrap { max-width: 680px; }
+
+    .cta-h { font-size: clamp(2rem, 4vw, 3.25rem); color: var(--white); margin-bottom: 1rem; letter-spacing: -0.03em; }
+    .cta-p { font-size: 1.1rem; color: rgba(255,255,255,0.6); line-height: 1.7; margin-bottom: 2.5rem; }
+
+    .cta-contact {
+      display: flex; flex-wrap: wrap; gap: 1.5rem;
+      justify-content: center; margin-top: 2.25rem;
+    }
+    .cta-contact a {
+      display: flex; align-items: center; gap: 0.5rem;
+      color: rgba(255,255,255,0.8); font-family: 'Nunito', sans-serif;
+      font-weight: 700; font-size: 1rem; transition: color 0.2s;
+    }
+    .cta-contact a:hover { color: var(--white); }
+    .cta-contact svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* ===== FOOTER ===== */
+    .footer { background: var(--navy); color: var(--white); padding: 4.5rem 1.5rem 2rem; }
+    @media (min-width: 768px) { .footer { padding: 4.5rem 3rem 2rem; } }
+
+    .footer-wrap { max-width: 1200px; margin: 0 auto; }
+    .footer-top {
+      display: grid; grid-template-columns: 1fr;
+      gap: 3rem; padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 2rem;
+    }
+    @media (min-width: 768px) { .footer-top { grid-template-columns: 2fr 1fr 1fr; gap: 4rem; } }
+
+    .footer-logo { height: 32px; width: auto; margin-bottom: 1rem; }
+    .footer-tagline {
+      font-family: 'Nunito', sans-serif; font-weight: 800;
+      font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--teal); margin-bottom: 1rem;
+    }
+    .footer-desc { font-size: 0.88rem; line-height: 1.75; color: rgba(255,255,255,0.45); max-width: 30ch; }
+
+    .footer-col-label {
+      font-family: 'Nunito', sans-serif; font-weight: 800;
+      font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(255,255,255,0.35); margin-bottom: 1.25rem;
+    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
+    .footer-links a { font-size: 0.9rem; color: rgba(255,255,255,0.6); transition: color 0.2s; }
+    .footer-links a:hover { color: var(--teal); }
+
+    .footer-bottom {
+      display: flex; flex-direction: column; gap: 0.5rem;
+      font-size: 0.8rem; color: rgba(255,255,255,0.25); text-align: center;
+    }
+    @media (min-width: 600px) { .footer-bottom { flex-direction: row; justify-content: space-between; text-align: left; } }
+
+    /* ===== WAVE DIVIDERS ===== */
+    .wave { display: block; line-height: 0; overflow: hidden; margin: 0; padding: 0; }
+    .wave svg { display: block; width: 100%; }
+
+    /* ===== SCROLL FADE-UP ===== */
+    .fu {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .fu.in { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAV ===== -->
+  <nav class="nav">
+    <a href="/" class="nav-brand">
+      <div class="nav-mark">
+        <img src="brand_assets/LogoMark-Colour.png" alt="Proficio" />
+      </div>
+      <div class="nav-name">
+        PROFICIO
+        <span>Accountants</span>
+      </div>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#why">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <a href="#contact" class="btn btn-magenta nav-cta">Book Free Consultation</a>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div id="hero-numbers" class="hero-numbers"></div>
+
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="hero-badge-dot"></span>
+          Essex-Based Accountants
+        </div>
+        <h1 class="hero-h1">
+          Making Your<br>
+          <em>Numbers</em><br>
+          Work <span class="tc">Harder.</span>
+        </h1>
+        <p class="hero-sub">
+          Proficio Accountants brings smart, personalised accounting to Essex businesses and individuals — so you can focus on what matters most.
+        </p>
+        <div class="hero-ctas">
+          <a href="#contact" class="btn btn-magenta">Book a Free Consultation &rarr;</a>
+          <a href="#services" class="btn btn-outline-teal">Our Services</a>
+        </div>
+      </div>
+
+      <div class="hero-mark">
+        <div class="hero-mark-wrap">
+          <div class="hero-mark-orbit"></div>
+          <img class="hero-mark-img" src="brand_assets/LogoMark-Colour.png" alt="Proficio Accountants" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== STATS BAR ===== -->
+  <div class="stats">
+    <div class="stats-inner">
+      <div class="stat fu">
+        <div class="stat-n">300+</div>
+        <div class="stat-l">Happy Clients</div>
+      </div>
+      <div class="stat fu" style="transition-delay:.1s">
+        <div class="stat-n">Essex</div>
+        <div class="stat-l">Based &amp; Proud</div>
+      </div>
+      <div class="stat fu" style="transition-delay:.2s">
+        <div class="stat-n">100%</div>
+        <div class="stat-l">Digital First</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- wave: navy → white -->
+  <div class="wave" style="background:#ffffff">
+    <svg viewBox="0 0 1440 64" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" height="64">
+      <path fill="#253B7C" d="M0,0 L1440,0 L1440,24 C1080,64 360,0 0,24 Z"/>
+    </svg>
+  </div>
+
+  <!-- ===== SERVICES ===== -->
+  <section class="section services" id="services">
+    <div class="section-wrap">
+      <div class="services-head fu">
+        <div class="eyebrow">What We Do</div>
+        <h2 class="section-h">Services Built for<br>Growing Businesses</h2>
+        <p class="section-p">From day-to-day bookkeeping to strategic business accounts — we handle the numbers so you can run your business.</p>
+      </div>
+
+      <div class="services-grid">
+
+        <div class="svc-card fu">
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24"><path d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 2.5 2 2.5-2 3.5 2z"/></svg>
+          </div>
+          <div class="svc-name">Tax Returns</div>
+          <div class="svc-desc">Personal and business tax returns handled accurately and on time — no stress, no surprises.</div>
+        </div>
+
+        <div class="svc-card fu" style="transition-delay:.05s">
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+          </div>
+          <div class="svc-name">Business Accounts</div>
+          <div class="svc-desc">Clear, compliant year-end accounts that give you a real picture of your business health.</div>
+        </div>
+
+        <div class="svc-card fu" style="transition-delay:.1s">
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <div class="svc-name">Bookkeeping</div>
+          <div class="svc-desc">Ongoing, accurate records with real-time visibility so you always know where you stand.</div>
+        </div>
+
+        <div class="svc-card fu" style="transition-delay:.15s">
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+          </div>
+          <div class="svc-name">VAT Returns</div>
+          <div class="svc-desc">MTD-compliant VAT returns filed correctly and on time. We take care of every detail.</div>
+        </div>
+
+        <div class="svc-card fu" style="transition-delay:.2s">
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
+          <div class="svc-name">Payroll</div>
+          <div class="svc-desc">Your team gets paid correctly and on time. PAYE, pension auto-enrolment — all handled.</div>
+        </div>
+
+        <div class="svc-card fu" style="transition-delay:.25s">
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+          </div>
+          <div class="svc-name">Management Accounts</div>
+          <div class="svc-desc">Monthly or quarterly reports with real insight to help you make confident decisions, fast.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- wave: white → navy -->
+  <div class="wave" style="background:#253B7C">
+    <svg viewBox="0 0 1440 64" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" height="64">
+      <path fill="#ffffff" d="M0,0 L1440,0 L1440,24 C1080,64 360,0 0,24 Z"/>
+    </svg>
+  </div>
+
+  <!-- ===== WHY PROFICIO ===== -->
+  <section class="section why" id="why">
+    <div class="section-wrap">
+      <div class="fu">
+        <div class="eyebrow">Why Proficio</div>
+        <h2 class="section-h">We Account for<br>Your Success</h2>
+        <p class="section-p">We believe accounting shouldn't feel like a chore. We're your financial partners — not just your number crunchers.</p>
+      </div>
+
+      <div class="why-grid">
+
+        <div class="why-card fu">
+          <div class="why-icon">
+            <svg viewBox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+          </div>
+          <div class="why-title">Personal</div>
+          <div class="why-desc">We're not a faceless call centre. You'll always speak with someone who knows your business inside out — hands-on from day one.</div>
+        </div>
+
+        <div class="why-card fu" style="transition-delay:.1s">
+          <div class="why-icon">
+            <svg viewBox="0 0 24 24"><path d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h16a2 2 0 012 2v10a2 2 0 01-2 2h-2"/></svg>
+          </div>
+          <div class="why-title">Digital</div>
+          <div class="why-desc">Real-time dashboards and best-in-class cloud software give you live visibility into your finances, wherever you are.</div>
+        </div>
+
+        <div class="why-card fu" style="transition-delay:.2s">
+          <div class="why-icon">
+            <svg viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </div>
+          <div class="why-title">Partnership</div>
+          <div class="why-desc">We grow with you. From startup to scale-up, we're the financial partner your business deserves at every stage.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- wave: navy → off-white -->
+  <div class="wave" style="background:#f7f8fc">
+    <svg viewBox="0 0 1440 64" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" height="64">
+      <path fill="#253B7C" d="M0,0 L1440,0 L1440,36 C960,64 480,4 0,36 Z"/>
+    </svg>
+  </div>
+
+  <!-- ===== TESTIMONIALS ===== -->
+  <section class="section testimonials">
+    <div class="section-wrap">
+      <div class="fu">
+        <div class="eyebrow">Client Stories</div>
+        <h2 class="section-h">Trusted by Essex<br>Businesses</h2>
+      </div>
+
+      <div class="t-grid">
+
+        <div class="t-card fu">
+          <div class="t-stars">
+            <svg class="t-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="t-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="t-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="t-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="t-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <div class="t-quote">&ldquo;</div>
+          <p class="t-text">Switching to Proficio was the best decision I made for my business. They save me hours every month and I finally feel in control of my finances.</p>
+          <div class="t-author">
+            <div class="t-avatar" style="background:var(--teal)">SK</div>
+            <div>
+              <div class="t-name">Sarah K.</div>
+              <div class="t-biz">Founder, SK Design Studio &mdash; Chelmsford</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="t-card fu" style="transition-delay:.1s">
+          <div class="t-stars">
+            <svg class="t-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="t-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="t-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="t-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="t-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <div class="t-quote">&ldquo;</div>
+          <p class="t-text">The team genuinely care about your success. Their digital-first approach means I always have live data — not just a report once a year.</p>
+          <div class="t-author">
+            <div class="t-avatar" style="background:var(--navy)">JM</div>
+            <div>
+              <div class="t-name">James M.</div>
+              <div class="t-biz">Director, Meridian Contractors Ltd &mdash; Basildon</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- wave: off-white → navy -->
+  <div class="wave" style="background:#253B7C">
+    <svg viewBox="0 0 1440 64" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" height="64">
+      <path fill="#f7f8fc" d="M0,0 L1440,0 L1440,36 C960,64 480,4 0,36 Z"/>
+    </svg>
+  </div>
+
+  <!-- ===== CTA ===== -->
+  <section class="section cta-sec" id="contact">
+    <div class="section-wrap fu">
+      <h2 class="cta-h">Ready to Take Control<br>of Your Finances?</h2>
+      <p class="cta-p">Book a free, no-obligation consultation with our team and discover how Proficio can help your business grow.</p>
+      <a href="mailto:hello@proficioaccountants.co.uk" class="btn btn-white">Book a Free Consultation &rarr;</a>
+      <div class="cta-contact">
+        <a href="tel:01268625895">
+          <svg viewBox="0 0 24 24"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+          01268 625 895
+        </a>
+        <a href="mailto:hello@proficioaccountants.co.uk">
+          <svg viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          hello@proficioaccountants.co.uk
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="footer-wrap">
+      <div class="footer-top">
+        <div>
+          <img class="footer-logo" src="brand_assets/LogoType-White.png" alt="Proficio Accountants" />
+          <div class="footer-tagline">Accounting for Your Success</div>
+          <p class="footer-desc">Personalised, digital-first accounting services for Essex businesses and individuals.</p>
+        </div>
+        <div>
+          <div class="footer-col-label">Services</div>
+          <ul class="footer-links">
+            <li><a href="#services">Tax Returns</a></li>
+            <li><a href="#services">Business Accounts</a></li>
+            <li><a href="#services">Bookkeeping</a></li>
+            <li><a href="#services">VAT Returns</a></li>
+            <li><a href="#services">Payroll</a></li>
+            <li><a href="#services">Management Accounts</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-label">Get in Touch</div>
+          <ul class="footer-links">
+            <li><a href="tel:01268625895">01268 625 895</a></li>
+            <li><a href="mailto:hello@proficioaccountants.co.uk">hello@proficioaccountants.co.uk</a></li>
+            <li><a href="#why">Wickford, Essex</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 Proficio Accountants Ltd. All rights reserved.</span>
+        <span>Registered in England &amp; Wales.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ===== HERO NUMBERS TEXTURE ===== */
+    (function () {
+      var el = document.getElementById('hero-numbers');
+      if (!el) return;
+      var chars = ['£','6','2','9','4','5','3','7','8','1','0','%','£','£','4','2'];
+      var s = 42; // seed
+      function r() { s = (s * 1664525 + 1013904223) & 0xffffffff; return (s >>> 0) / 4294967295; }
+      var ns = 'http://www.w3.org/2000/svg';
+      var svg = document.createElementNS(ns, 'svg');
+      svg.setAttribute('width', '100%');
+      svg.setAttribute('height', '100%');
+      svg.style.cssText = 'position:absolute;inset:0;width:100%;height:100%';
+      for (var i = 0; i < 65; i++) {
+        var t = document.createElementNS(ns, 'text');
+        t.textContent = chars[Math.floor(r() * chars.length)];
+        t.setAttribute('x', (r() * 100) + '%');
+        t.setAttribute('y', (r() * 100) + '%');
+        t.setAttribute('font-size', Math.floor(r() * 52 + 18) + 'px');
+        t.setAttribute('font-family', 'Nunito, Arial Rounded MT Bold, sans-serif');
+        t.setAttribute('font-weight', '900');
+        t.setAttribute('fill', 'white');
+        t.setAttribute('opacity', (r() * 0.08 + 0.03).toFixed(2));
+        var cx = r() * 1400, cy = r() * 900, angle = r() * 70 - 35;
+        t.setAttribute('transform', 'rotate(' + angle + ' ' + cx + ' ' + cy + ')');
+        svg.appendChild(t);
+      }
+      el.appendChild(svg);
+    })();
+
+    /* ===== SCROLL FADE-UP ===== */
+    (function () {
+      var els = document.querySelectorAll('.fu');
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
+        });
+      }, { threshold: 0.1 });
+      els.forEach(function (el) { obs.observe(el); });
+    })();
+  </script>
+</body>
+</html>
