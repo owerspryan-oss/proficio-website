@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#253B7C" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>Proficio Accountants | Accounting for Your Success | Essex</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -33,6 +35,7 @@
       -webkit-font-smoothing: antialiased;
       scroll-behavior: smooth;
       scrollbar-width: thin;
+      background: var(--navy); /* prevents white flash on iOS overscroll at top */
     }
     body { background: var(--white); color: var(--black); overflow-x: hidden; }
     img  { display: block; max-width: 100%; }
