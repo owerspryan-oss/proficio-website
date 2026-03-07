@@ -187,7 +187,13 @@
       color: var(--white); margin-bottom: 1.75rem;
       letter-spacing: -0.04em;
     }
-    .hero-h1 em { font-style: normal; color: var(--magenta); }
+    .hero-h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, #FF6EC7 0%, #F542AD 45%, #C5197D 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
     .hero-h1 .tc { color: var(--teal); }
 
     .hero-sub {
