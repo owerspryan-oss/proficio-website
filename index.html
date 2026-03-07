@@ -794,8 +794,10 @@
         t.setAttribute('font-size', Math.floor(r() * 52 + 18) + 'px');
         t.setAttribute('font-family', 'Nunito, Arial Rounded MT Bold, sans-serif');
         t.setAttribute('font-weight', '900');
-        t.setAttribute('fill', 'white');
-        t.setAttribute('opacity', (r() * 0.08 + 0.03).toFixed(2));
+        t.setAttribute('fill', 'none');
+        t.setAttribute('stroke', '#B2E0E4');
+        t.setAttribute('stroke-width', '0.7');
+        t.setAttribute('opacity', (r() * 0.18 + 0.08).toFixed(2));
         var cx = r() * 1400, cy = r() * 900, angle = r() * 70 - 35;
         t.setAttribute('transform', 'rotate(' + angle + ' ' + cx + ' ' + cy + ')');
         svg.appendChild(t);
